@@ -186,13 +186,7 @@ class BasicView extends Ui.WatchFace {
       var dw = dc.getWidth();
       var dh = dc.getHeight();
 
-
-      // define an array of points for the polygon (orig_x, orig_y, x_ang1, y_ang2, x_ang2, y_ang2)
-      //var pts = [ [-50, dh/2], [dw*2/3, dh*2/3], [dw/2, dh/2] ];
-      //dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-      //dc.fillPolygon(pts);
-
-      // draw the next segment from the center, to the edge
+      // draw a polygon arc from center, to the edge
       var ang = angle-90;
       var prev_ang = (angle-2)-90;
       var colour = Gfx.COLOR_GREEN;
@@ -201,9 +195,10 @@ class BasicView extends Ui.WatchFace {
       var y = dh/2;
       var radius = (dh > dw) ? dh : dw;
 
+      // draws a polygon using draw_arc
       draw_arc(dc, x, y, radius, prev_ang, ang, colour);
 
-
+      // just the time
       dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
       dc.drawText(dw/2,(dh/2)-(dc.getFontHeight(Gfx.FONT_SYSTEM_NUMBER_THAI_HOT)/2),Gfx.FONT_SYSTEM_NUMBER_THAI_HOT,hour.toString() + ":" + minute.toString(),Gfx.TEXT_JUSTIFY_CENTER);
 
@@ -220,6 +215,8 @@ class BasicView extends Ui.WatchFace {
 
       // redraw the screen
       Ui.requestUpdate();
+
+      // increment the angle of the arc
       angle = angle + 1;
 
       // timer not greater than 500ms? then let's start the timer again
